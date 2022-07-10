@@ -12,6 +12,7 @@ from plaid.model.item_public_token_exchange_request import ItemPublicTokenExchan
 from plaid.model.products import Products
 from plaid.model.country_code import CountryCode
 
+import token_store
 
 app = Flask(__name__)
 
@@ -61,4 +62,6 @@ def exchange_public_token():
     access_token = response['access_token']
     item_id = response['item_id']
     # TODO: encrypt and write access token to persistent storage
+    token_store.add_token(access_token)
+
     return ('', HTTPStatus.NO_CONTENT)
